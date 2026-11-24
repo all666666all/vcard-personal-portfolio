@@ -206,3 +206,22 @@ article {
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .sidebar, article, .navbar { background: rgba(19, 29, 63, 0.92); }
 }
+
+/* avatar: drawing sits on a frosted disc with a fluorescent rim */
+.avatar-box {
+  position: relative;
+  border-radius: 50%;
+  padding: 6px;
+  background: conic-gradient(from 210deg, var(--gfp), var(--dapi), var(--mcherry), var(--gfp));
+  box-shadow: 0 12px 30px rgba(124,155,255,0.35);
+}
+.avatar-box img {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffffff 0%, #e7ecff 60%, #cfd8ff 100%);
+  filter: none;
+}
+
+@media (min-width: 580px) { .avatar-box img { width: 96px; height: 96px; } }
+@media (min-width: 1250px) { .avatar-box img { width: 140px; height: 140px; } }
