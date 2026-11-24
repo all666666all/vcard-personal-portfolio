@@ -343,3 +343,5 @@ article > *:not(.navbar), .sidebar > * { position: relative; z-index: 1; }
   border: 1.5px solid transparent;
   color: var(--label);
 }
+.tile, .service-icon-box.tile, .icon-box.tile { flex-shrink: 0; }
+@media (min-width: 580px) { .service-icon-box.tile { margin: 0; } }
