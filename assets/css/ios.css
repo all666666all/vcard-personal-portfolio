@@ -233,3 +233,113 @@ article {
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .sidebar, article, .navbar { background: rgba(255,255,255,.92); }
 }
+
+/* ==========================================================
+   Depth pass: thicker glass with edge light and sheen,
+   plus the rainbow rim brought back as the signature accent.
+   ========================================================== */
+
+:root {
+  --rainbow: conic-gradient(from 200deg, #34c759, #30b0c7, #007aff, #ff6b9a, #ff9500, #ffcc00, #34c759);
+  --rainbow-line: linear-gradient(90deg, #34c759, #30b0c7, #007aff, #ff6b9a, #ff9500);
+  --edge: inset 0 1px 1px rgba(255,255,255,.95),
+          inset 1px 0 0 rgba(255,255,255,.55),
+          inset -1px 0 0 rgba(255,255,255,.25),
+          inset 0 -1px 1px rgba(255,255,255,.35);
+}
+
+/* stronger color behind the glass so the blur reads as material */
+.c1 { opacity: .6; background: #5fb2ff; }
+.c2 { opacity: .55; background: #ffbe6b; }
+.c3 { opacity: .55; background: #6fe0a9; }
+.c4 { opacity: .5;  background: #ff9aa8; }
+
+.sidebar,
+article {
+  background: linear-gradient(150deg, rgba(255,255,255,.78) 0%, rgba(255,255,255,.42) 55%, rgba(255,255,255,.55) 100%);
+  border: 1px solid rgba(255,255,255,.7);
+  box-shadow:
+    var(--edge),
+    inset 0 -30px 40px -30px rgba(31,64,120,.18),
+    0 1px 2px rgba(31,64,120,.06),
+    0 12px 24px -12px rgba(31,64,120,.22),
+    0 40px 80px -30px rgba(31,64,120,.35);
+}
+
+/* specular sheen across the top-left of each slab */
+.sidebar::after,
+article::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 60% at 0% 0%, rgba(255,255,255,.65) 0%, rgba(255,255,255,0) 45%),
+    linear-gradient(180deg, rgba(255,255,255,.35) 0%, rgba(255,255,255,0) 18%);
+  z-index: 0;
+}
+article { position: relative; }
+@media (max-width: 1249px) { .sidebar { position: relative; } }
+article > *:not(.navbar), .sidebar > * { position: relative; z-index: 1; }
+.navbar { z-index: 6; }
+
+/* inner cards: a thinner pane of the same glass */
+.service-item,
+.content-card,
+.skills-list.content-card,
+.widget {
+  background: linear-gradient(160deg, rgba(255,255,255,.9) 0%, rgba(255,255,255,.6) 100%);
+  border: 1px solid rgba(255,255,255,.85);
+  box-shadow:
+    var(--edge),
+    0 1px 2px rgba(31,64,120,.06),
+    0 14px 28px -16px rgba(31,64,120,.35);
+}
+
+.navbar {
+  background: linear-gradient(180deg, rgba(255,255,255,.8), rgba(255,255,255,.5));
+  box-shadow: var(--edge), 0 12px 28px -12px rgba(31,64,120,.3);
+}
+@media (min-width: 1024px) {
+  .navbar-link.active { box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 3px 10px rgba(31,64,120,.15); }
+}
+
+/* app tiles get a glossy top half */
+.tile { overflow: hidden; }
+.tile::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 50% 0;
+  background: linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,0));
+  pointer-events: none;
+}
+
+/* rainbow rim: avatar, title underline, active tab, timeline dots */
+.avatar-box {
+  padding: 5px;
+  background: var(--rainbow);
+  box-shadow: 0 0 0 4px rgba(255,255,255,.7), 0 14px 34px -10px rgba(0,122,255,.45);
+}
+.avatar-box img { box-shadow: inset 0 0 0 1px rgba(0,0,0,.04); }
+
+.article-title::after { background: var(--rainbow-line); width: 44px; }
+.timeline-item::after {
+  background: var(--rainbow);
+  box-shadow: 0 0 0 3px rgba(255,255,255,.9), 0 2px 6px rgba(31,64,120,.25);
+}
+@media (min-width: 1024px) {
+  .navbar-link.active { position: relative; }
+  .navbar-link.active::after {
+    content: "";
+    position: absolute;
+    left: 30%; right: 30%; bottom: 3px;
+    height: 2px; border-radius: 2px;
+    background: var(--rainbow-line);
+  }
+}
+.info-content .title {
+  background: linear-gradient(#fff, #fff) padding-box, var(--rainbow-line) border-box;
+  border: 1.5px solid transparent;
+  color: var(--label);
+}
